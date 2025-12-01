@@ -1,3 +1,4 @@
+engine/.venv
 .venv/
 __pycache__/
 *.pyc
@@ -5,3 +6,11 @@ rustbpe/target/
 dev-ignore/
 report.md
 eval_bundle/
+
+engine/.venv/
+engine/__pycache__/
+engine/*.pyc
+engine/rustbpe/target/
+engine/dev-ignore/
+engine/report.md
+engine/eval_bundle/

@@ -121,8 +121,29 @@ class MLP(nn.Module):
         x = F.relu(x).square()
         x = self.c_proj(x)
         return x
+    
+
+class MLP_SWIGLU(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+        d = config.n_embd
+        # 8/3 * d ≈ mismo nº de parámetros que FFN 4*d con una sola rama
+        hidden = (8 * d) // 3
+
+        self.c_gate = nn.Linear(d, hidden, bias=False)
+        self.c_fc   = nn.Linear(d, hidden, bias=False)
+        self.c_proj = nn.Linear(hidden, d, bias=False)
+
+    def forward(self, x):
+        gate = F.silu(self.c_gate(x))  # Swish/SiLU
+        val  = self.c_fc(x)
+        x    = gate * val              # SwiGLU
+        x    = self.c_proj(x)
+        return x
+    
 
 
+    
 class Block(nn.Module):
     def __init__(self, config, layer_idx):
         super().__init__()

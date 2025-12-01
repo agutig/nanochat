@@ -1,0 +1,72 @@
+{
+  "nanochat_base_dir": "/home/evilguti/.cache/nanochat",
+
+  "stages": {
+    "dataset": true,
+    "tokenizer_train": true,
+    "tokenizer_eval": true,
+
+    "base_train": true,
+    "base_loss_eval": true,
+    "base_core_eval": true,
+
+    "mid_train": true,
+    "chat_eval_mid": true,
+
+    "sft_train": true,
+    "report": true
+  },
+
+  "dataset": {
+    "num_shards": 4
+  },
+
+  "tokenizer": {
+    "max_chars": 1000000000
+  },
+
+  "base_train": {
+    "depth": 4,
+    "max_seq_len": 1024,
+    "device_batch_size": 1,
+    "total_batch_size": 1024,
+    "eval_every": 50,
+    "eval_tokens": 4096,
+    "core_metric_every": 50,
+    "core_metric_max_per_task": 12,
+    "sample_every": 50,
+    "num_iterations": 50
+  },
+
+  "base_loss": {
+    "device_batch_size": 1,
+    "split_tokens": 4096
+  },
+
+  "base_eval": {
+    "max_per_task": 16
+  },
+
+  "mid_train": {
+    "max_seq_len": 1024,
+    "device_batch_size": 1,
+    "eval_every": 50,
+    "eval_tokens": 4096,
+    "total_batch_size": 1024,
+    "num_iterations": 100
+  },
+
+  "chat_eval_mid": {
+    "source": "mid",
+    "max_new_tokens": 128,
+    "max_problems": 20
+  },
+
+  "sft_train": {
+    "device_batch_size": 1,
+    "target_examples_per_step": 4,
+    "num_iterations": 100,
+    "eval_steps": 4,
+    "eval_metrics_max_problems": 16
+  }
+}
